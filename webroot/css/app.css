@@ -1,0 +1,53 @@
+body {
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#my-view {}
+
+#my-view .block {
+	position:relative;
+	font-size: .9em;
+	border-bottom:1px solid #CCC;
+	padding:10px;
+	clear:both;
+}
+
+#my-view .block .name {
+	width: 200px;
+	padding-right:1em;
+	float:left;
+	font-weight:bold;
+}
+
+#my-view .block .motto {
+	width: 200px;
+	float:left;
+}
+
+#my-view .block .close {
+	position:absolute;
+	display:block;
+	right:1em;
+	top:.5em;
+	text-decoration: none;
+	color:black;
+	padding:.3em;
+	border:1px solid #aaaaaa;
+	background-color:#CCCCCC;
+	width:1em;
+	height:1em;
+	text-align: center;
+}
+
+#add-one {
+	text-decoration: none;
+	color:black;
+	margin-top:.5em;
+	padding:.3em;
+	border:1px solid #aaaaaa;
+	background-color:#CCCCCC;
+	width:4em;
+	height:1em;
+	text-align: center;
+	display:block;
+}
