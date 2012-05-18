@@ -15,13 +15,13 @@ h1 {
 }
 
 #container {
-	/*border: 2px solid #999999;*/
 	width:600px;
 	font-size: 1em;
 	background-color: #999999;
 	background-image: url('../images/txture.png');
 	color:#EEEEEE;
 	margin:auto;
+	border-radius: 1em;
 }
 
 #todo-list .row {
