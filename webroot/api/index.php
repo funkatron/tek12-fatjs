@@ -2,6 +2,17 @@
 
 require __DIR__ . "/../../vendor/autoload.php";
 
+
+/**
+ * get MongoDB collection
+ * @return MongoCollection
+ */
+function get_db_coll() {
+	$conn = new Mongo();
+	$db = $conn->toodoo;
+	return $db->items;
+}
+
 $app = new Slim();
 
 /**
@@ -9,29 +20,44 @@ $app = new Slim();
  */
 $app->get('/items', function() use ($app) {
 
+	$items = array();
+
+	$cur = get_db_coll()->find()->limit(1000);
+	foreach ($cur as $obj) {
+		$item = array();
+		$item['id'] = (string)$obj['_id'];
+		$item['order'] = $obj['order'];
+		$item['done'] = $obj['done'];
+		$item['text'] = $obj['text'];
+		$items[] = $item;
+	}
+
 	$response = $app->response();
 	$response['Content-Type'] = 'application/json';
-
-	$json = '[
-		{ "id": 1, "order": 2, "done": false, "text": "Eggs" },
-		{ "id": 2, "order": 1, "done": false, "text": "Milk" },
-		{ "id": 3, "order": 4, "done": false, "text": "Butter" },
-		{ "id": 4, "order": 3, "done": true, "text": "Cat food" }
-	]';
-
-	$response->body($json);
+	$response->body(json_encode($items));
 
 });
 
 /**
  * get a single item
  */
-$app->get('/item/:id', function() use ($app) {
+$app->get('/item/:id', function($id) use ($app) {
+
+	$item = null;
+
+	$obj = get_db_coll()->findOne(array(
+		'_id' => new MongoId($id)
+	));
+
+	$item = array();
+	$item['id'] = (string)$obj['_id'];
+	$item['order'] = $obj['order'];
+	$item['done'] = $obj['done'];
+	$item['text'] = $obj['text'];
 
 	$response = $app->response();
 	$response['Content-Type'] = 'application/json';
-
-	$response->body(null);
+	$response->body(json_encode($item));
 
 });
 
@@ -41,12 +67,38 @@ $app->get('/item/:id', function() use ($app) {
  */
 $app->post('/item/?', function() use ($app) {
 
-	$response = $app->response();
-	$response['Content-Type'] = 'application/json';
+	$item = null;
 
 	$requestBody = $app->request()->getBody();
-	$json = json_decode($requestBody, true);
-	$response->body(json_encode($json));
+	$new_item = json_decode($requestBody, true);
+
+	if ($new_item) {
+
+		$insert = array();
+		$insert['order'] = $new_item['order'];
+		$insert['done'] = $new_item['done'];
+		$insert['text'] = $new_item['text'];
+		get_db_coll()->insert($insert);
+
+	}
+
+	if (isset($insert)) {
+
+		$item = array();
+		$item['id'] = (string)$insert['_id'];
+		$item['order'] = $insert['order'];
+		$item['done'] = $insert['done'];
+		$item['text'] = $insert['text'];
+		$response = $app->response();
+		$response['Content-Type'] = 'application/json';
+		$response->body(json_encode($item));
+
+	} else {
+
+		$response->status(500);
+		echo "crap";
+
+	}
 
 });
 
@@ -55,25 +107,56 @@ $app->post('/item/?', function() use ($app) {
  */
 $app->put('/item/:id', function ($id) use ($app) {
 
-	$response = $app->response();
-	$response['Content-Type'] = 'application/json';
+	$item = null;
+
+	$obj = get_db_coll()->findOne(array('_id' => new MongoId($id)));
+
+	if (!$obj) {
+		$response->status(500);
+		echo "crap";
+	}
 
 	$requestBody = $app->request()->getBody();
-	$json = json_decode($requestBody, true);
-	error_log($requestBody);
-	$response->body(json_encode($json));
+	$updated_item = json_decode($requestBody, true);
+
+	$obj['order'] = $updated_item['order'];
+	$obj['done'] = $updated_item['done'];
+	$obj['text'] = $updated_item['text'];
+
+	get_db_coll()->save($obj);
+
+	// retrieve so we're getting exactly what's in the DB
+	$obj = get_db_coll()->findOne(array('_id'=>$obj['_id']));
+
+	$item = array();
+	$item['id'] = (string)$obj['_id'];
+	$item['order'] = $obj['order'];
+	$item['done'] = $obj['done'];
+	$item['text'] = $obj['text'];
+
+	$response = $app->response();
+	$response['Content-Type'] = 'application/json';
+	$response->body(json_encode($item));
 
 });
+
 
 /**
  * delete an item
  */
 $app->delete('/item/:id', function ($id) use ($app) {
 
+	get_db_coll()->remove(
+		array(
+			'_id' => new MongoId($id)
+		),
+		array("justOne" => true)
+	);
+
 	$response = $app->response();
 	$response['Content-Type'] = 'application/json';
 
-	$response->body(true);
+	$response->body(null);
 
 });
 
