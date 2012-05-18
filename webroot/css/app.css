@@ -1,53 +1,93 @@
 body {
 	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	color:#666666;
+	background-image: url('../images/light_toast.png');
 }
 
-#my-view {}
+h1 {
+	font-size:3em;
+	margin:0;
+	padding:.3em;
+}
 
-#my-view .block {
+.clickable {
+	cursor: pointer;
+}
+
+#container {
+	/*border: 2px solid #999999;*/
+	width:600px;
+	font-size: 1em;
+	background-color: #999999;
+	background-image: url('../images/txture.png');
+	color:#EEEEEE;
+	margin:auto;
+}
+
+#todo-list .row {
 	position:relative;
-	font-size: .9em;
 	border-bottom:1px solid #CCC;
-	padding:10px;
+	background-color: #FFFFFF;
+	color:#666666;
+	padding:.2em;
 	clear:both;
+	height:4em;
 }
 
-#my-view .block .name {
-	width: 200px;
-	padding-right:1em;
-	float:left;
-	font-weight:bold;
+#todo-list .row .done {
+	display: block;
+	background-image: url('../images/258-checkmark@2x.png');
+	background-repeat: no-repeat;
+	width: 44px;
+	height: 44px;
+	left:1em;
+	top:.7em;
+	position:absolute;
 }
 
-#my-view .block .motto {
-	width: 200px;
-	float:left;
+#todo-list .row .done.not-done {
+	opacity: .2;
 }
 
-#my-view .block .close {
+
+#todo-list .row .text {
+	display: block;
+	color:#666666;
+	font-size: 2.5em;
+	margin-right:1em;
+	position: absolute;
+	left:2em;
+	right:2em;
+	border:1px solid transparent;
+}
+
+#todo-list .row .text:hover {
+	border:1px solid #CCCCCC;
+	color:#333333;
+}
+
+#todo-list .row .text:focus {
+	border:1px solid #CCCCCC;
+	color:#333333;
+	background-color: #FFFFEE;
+}
+
+#todo-list .row .erase {
+	background-image: url('../images/298-circlex@2x.png');
+	background-repeat: no-repeat;
+	width: 44px;
+	height: 44px;
 	position:absolute;
 	display:block;
 	right:1em;
-	top:.5em;
-	text-decoration: none;
-	color:black;
-	padding:.3em;
-	border:1px solid #aaaaaa;
-	background-color:#CCCCCC;
-	width:1em;
-	height:1em;
-	text-align: center;
+	top:.7em;
 }
 
 #add-one {
-	text-decoration: none;
-	color:black;
-	margin-top:.5em;
-	padding:.3em;
-	border:1px solid #aaaaaa;
-	background-color:#CCCCCC;
-	width:4em;
-	height:1em;
-	text-align: center;
-	display:block;
+	background-image: url('../images/31-circle-plus@2x.png');
+	background-repeat: no-repeat;
+	width: 56px;
+	height: 56px;
+	margin:.5em;
+	padding-bottom:.5em;
 }

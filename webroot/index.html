@@ -6,12 +6,20 @@
 	    <link rel="stylesheet" href="/css/app.css">
 	</head>
 	<script type="text/javascript" charset="UTF-8">
-		window.collection = [{name: 'funkatron', motto: ':dogout:'}, {name: 'ehaas', motto: ':frogout:'}];
+		window.collection = [
+			{ order: 2, done: false, text: 'Eggs' },
+			{ order: 1, done: false, text: 'Milk' },
+			{ order: 4, done: false, text: 'Butter' },
+			{ order: 3, done: true, text: 'Cat food' }
+		];
 	</script>
 	<body>
-		<div id="my-view">
+		<div id="container">
+			<h1>TOO-DOO</h1>
+			<div id="todo-list">
+			</div>
+			<div id="add-one" class="clickable"></div>
 		</div>
-		<a href="#" id="add-one">Add one</a>
-		<script type='text/javascript' data-main='/js/apps/my_app' src='/js/libs/require-min.js' charset='UTF-8'></script>
+		<script type='text/javascript' data-main='/js/apps/todo_app' src='/js/libs/require-min.js' charset='UTF-8'></script>
 	</body>
 </html>
