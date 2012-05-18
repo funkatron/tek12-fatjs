@@ -22,14 +22,16 @@ define([
 			'change .text': 'update'
 		},
 		update: function() {
-			this.model.set({'text': this.textinput.val()});
+			this.model.save({'text': this.textinput.val()});
+			console.log(this.model.get('text'));
 		},
 		erase: function() {
 			this.remove();
+			this.model.destroy();
 			return false;
 		},
 		done: function() {
-			this.model.set({'done': !this.model.get('done')});
+			this.model.save({'done': !this.model.get('done')});
 		}
 	});
 	return ItemView;

@@ -11,15 +11,27 @@ define([
 ], function($, ItemModel, ItemCollection, ItemView) {
 	var TodoApp = Backbone.View.extend({
 		initialize: function() {
-			this.collection = new ItemCollection(window.collection);
+			// this.collection = new ItemCollection(window.collection);
+			this.collection = new ItemCollection();
+			this.collection.url = "/api/items";
+			this.collection.fetch({
+				'reset' : true,
+				'parse' : function(resp) {
+					return JSON.decode(resp);
+				},
+				'success' : _.bind(function(resp, status, xhr) {
+					console.log(resp);
+					this.render();
+				}, this)
+			});
 			this.collection.bind('add', this.renderModel, this);
-			this.render();
 		},
 		events: {
 			'click #add-one': 'addOne'
 		},
 		addOne: function() {
-			var model = new ItemModel({name: 'scoates', motto: ':dukedog'});
+			var model = new ItemModel();
+			model.save();
 			this.collection.add(model);
 			return false;
 		},
