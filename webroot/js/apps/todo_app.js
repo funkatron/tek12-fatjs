@@ -6,12 +6,13 @@ require.config({
 define([
 
 	'libs/jquery',
+	'libs/backbone',
 	'models/item_model',
 	'collections/item_collection',
 	'views/item_view',
 	'libs/ujs'
 
-], function($, ItemModel, ItemCollection, ItemView) {
+], function($, Backbone, ItemModel, ItemCollection, ItemView) {
 
 	var TodoApp = Backbone.View.extend({
 
