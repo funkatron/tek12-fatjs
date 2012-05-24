@@ -1,17 +1,21 @@
 define([
+
 	'libs/backbone'
+
 ], function(Backbone){
+
 	var ItemModel = Backbone.Model.extend({
+
 		defaults: {
 			done: false,
-			text: 'Enter what to be doin',
+			text: 'Enter what it do',
 			order: 99
 		},
-		url : function() {
-			var base =  'api/item';
-			if (this.isNew()) return base;
-			else return base + '/' + this.id;
-		}
+
+		urlRoot: 'api/items' // need this to create & save model independently
+
 	});
+
 	return ItemModel;
+
 });

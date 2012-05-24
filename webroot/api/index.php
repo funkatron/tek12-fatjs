@@ -41,7 +41,7 @@ $app->get('/items', function() use ($app) {
 /**
  * get a single item
  */
-$app->get('/item/:id', function($id) use ($app) {
+$app->get('/items/:id', function($id) use ($app) {
 
 	$item = null;
 
@@ -65,7 +65,7 @@ $app->get('/item/:id', function($id) use ($app) {
 /**
  * add a new item
  */
-$app->post('/item/?', function() use ($app) {
+$app->post('/items/?', function() use ($app) {
 
 	$item = null;
 
@@ -105,7 +105,7 @@ $app->post('/item/?', function() use ($app) {
 /**
  * update an existing item
  */
-$app->put('/item/:id', function ($id) use ($app) {
+$app->put('/items/:id', function ($id) use ($app) {
 
 	$item = null;
 
@@ -144,7 +144,7 @@ $app->put('/item/:id', function ($id) use ($app) {
 /**
  * delete an item
  */
-$app->delete('/item/:id', function ($id) use ($app) {
+$app->delete('/items/:id', function ($id) use ($app) {
 
 	get_db_coll()->remove(
 		array(
